@@ -46,7 +46,7 @@ def main():
 
     run_tests()
 
-    input_lines = args.filepath.readlines()
+    input_lines = [l.strip() for l in args.filepath.readlines()]
     print(f'Part 1 solution: {part_1(input_lines)}')
     print(f'Part 2 solution: {part_2(input_lines)}')
 
