@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-
-import os
-import re
-import sys
+import argparse
 import itertools as it
 
 
@@ -15,14 +11,16 @@ def _group_consecutive(iterable, length=2):
 
 
 def part_1(dataset=[]):
-    return len([group for group in _group_consecutive(dataset) if group[1] > group[0]])
+    number_dataset = [int(n) for n in dataset]
+    return len([group for group in _group_consecutive(number_dataset) if group[1] > group[0]])
 
 
 def part_2(dataset=[]):
-    return len([group for group in _group_consecutive(_group_consecutive(dataset, 3)) if sum(group[1]) > sum(group[0])])
+    number_dataset = [int(n) for n in dataset]
+    return len([group for group in _group_consecutive(_group_consecutive(number_dataset, 3)) if sum(group[1]) > sum(group[0])])
 
 
-def test():
+def run_tests():
     test_data = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
     expected_part_1 = 7
     expected_part_2 = 5
@@ -32,19 +30,17 @@ def test():
     print('Tests passed!')
 
 
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filepath', type=argparse.FileType('r'), help='Filepath for the input data file')
+    args = parser.parse_args()
+
+    run_tests()
+
+    input_lines = args.filepath.readlines()
+    print(f'Part 1 solution: {part_1(input_lines)}')
+    print(f'Part 2 solution: {part_2(input_lines)}')
+
+
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and sys.argv[1] == 'test':
-        test()
-        exit(0)
-
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print('solution.py {path_to_input_file}')
-        exit(1)
-
-    dataset = []
-    with open(sys.argv[1]) as f:
-        for line in f.readlines():
-            dataset.append(int(line))
-
-    print(f'Part 1 solution: {part_1(dataset)}')
-    print(f'Part 2 solution: {part_2(dataset)}')
+    main()

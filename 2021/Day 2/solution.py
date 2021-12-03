@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-
-import os
-import sys
+import argparse
 
 
 def _parse_movement(direction_str):
@@ -32,7 +29,7 @@ def part_2(dataset=[]):
     return abs(horizontal_change * depth_change)
 
 
-def test():
+def run_tests():
     test_data = ['forward 5', 'down 5', 'forward 8', 'up 3', 'down 8', 'forward 2']
     expected_part_1 = 150
     expected_part_2 = 900
@@ -42,19 +39,17 @@ def test():
     print('Tests passed!')
 
 
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('filepath', type=argparse.FileType('r'), help='Filepath for the input data file')
+    args = parser.parse_args()
+
+    run_tests()
+
+    input_lines = args.filepath.readlines()
+    print(f'Part 1 solution: {part_1(input_lines)}')
+    print(f'Part 2 solution: {part_2(input_lines)}')
+
+
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and sys.argv[1] == 'test':
-        test()
-        exit(0)
-
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print('solution.py {path_to_input_file}')
-        exit(1)
-
-    dataset = []
-    with open(sys.argv[1]) as f:
-        for line in f.readlines():
-            dataset.append(line.strip())
-
-    print(f'Part 1 solution: {part_1(dataset)}')
-    print(f'Part 2 solution: {part_2(dataset)}')
+    main()
