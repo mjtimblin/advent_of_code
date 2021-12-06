@@ -3,16 +3,17 @@ from typing import List
 
 
 def _get_fish_population_after_days(initial_fish_ages: List[int], num_days: int):
-    fish_at_ages = [0 for _ in range(9)]
+    num_fish_at_ages = [0 for _ in range(9)]
+
     for n in initial_fish_ages:
-        fish_at_ages[n] += 1
+        num_fish_at_ages[n] += 1
 
     for _ in range(num_days):
-        left_over_fish = fish_at_ages[0]
-        fish_at_ages = fish_at_ages[1:] + fish_at_ages[:1]
-        fish_at_ages[6] += left_over_fish
+        num_parents = num_fish_at_ages[0]
+        num_fish_at_ages = num_fish_at_ages[1:] + num_fish_at_ages[:1]
+        num_fish_at_ages[6] += num_parents
 
-    return sum(fish_at_ages)
+    return sum(num_fish_at_ages)
 
 
 def part_1(dataset=[]):
