@@ -18,20 +18,17 @@ def _get_higher_by_one_adjacent_points(grid, point) -> List[tuple]:
     higher_points = []
     p_x, p_y = point
 
-    if grid[p_y][p_x] == 8:
-        return []
-
     # left
-    if p_x > 0 and grid[p_y][p_x - 1] - 1 == grid[p_y][p_x]:
+    if p_x > 0 and grid[p_y][p_x - 1] > grid[p_y][p_x] and grid[p_y][p_x - 1] != 9:
         higher_points.append((p_x - 1, p_y))
     # right
-    if p_x < (len(grid[0]) - 1) and grid[p_y][p_x + 1] - 1 == grid[p_y][p_x]:
+    if p_x < (len(grid[0]) - 1) and grid[p_y][p_x + 1] > grid[p_y][p_x] and grid[p_y][p_x + 1] != 9:
         higher_points.append((p_x + 1, p_y))
     # up
-    if p_y > 0 and grid[p_y - 1][p_x] - 1 == grid[p_y][p_x]:
+    if p_y > 0 and grid[p_y - 1][p_x] > grid[p_y][p_x] and grid[p_y - 1][p_x] != 9:
         higher_points.append((p_x, p_y - 1))
     # down
-    if p_y < (len(grid) - 1) and grid[p_y + 1][p_x] - 1 == grid[p_y][p_x]:
+    if p_y < (len(grid) - 1) and grid[p_y + 1][p_x] > grid[p_y][p_x] and grid[p_y + 1][p_x] != 9:
         higher_points.append((p_x, p_y + 1))
 
     if higher_points == []:
@@ -40,15 +37,11 @@ def _get_higher_by_one_adjacent_points(grid, point) -> List[tuple]:
         new_higher_points = [*higher_points]
         for p in higher_points:
             new_higher_points.extend(_get_higher_by_one_adjacent_points(grid, p))
-        return new_higher_points    
+        return new_higher_points
 
 
 def _get_basin_size_from_point(grid: List[List], low_point: tuple) -> int:
     adjacent_points = sorted(set(_get_higher_by_one_adjacent_points(grid, low_point)))
-    # print('low_point', low_point)
-    # print('adjacent_points', adjacent_points)
-    # print('basin_size', len(adjacent_points) + 1)
-    # print('---------------------')
     return len(adjacent_points) + 1
 
 
@@ -64,8 +57,8 @@ def part_2(dataset=[]):
             grid[y][x] = int(grid[y][x])
 
     low_points = _get_low_points(grid)
-    top_three_basins = sorted([_get_basin_size_from_point(grid, p) for p in low_points])[-3:]
-    return top_three_basins[0] * top_three_basins[1] * top_three_basins[2]
+    basin_sizes = sorted([_get_basin_size_from_point(grid, p) for p in low_points])
+    return basin_sizes[-1] * basin_sizes[-2] * basin_sizes[-3]
 
 
 def run_tests():
