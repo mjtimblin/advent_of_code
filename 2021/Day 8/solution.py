@@ -3,30 +3,30 @@ from typing import List
 
 
 def _get_segment_digit_mapping(sample_encoded_digits: List[str]):
-    sorted_encoded_digits = [list(s) for s in sample_encoded_digits]
+    encoded_digit_sets = [set(s) for s in sample_encoded_digits]
     key = [set()] * 10
 
-    key[1] = set(*[l for l in sorted_encoded_digits if len(l) == 2])
-    key[4] = set(*[l for l in sorted_encoded_digits if len(l) == 4])
-    key[7] = set(*[l for l in sorted_encoded_digits if len(l) == 3])
-    key[8] = set(*[l for l in sorted_encoded_digits if len(l) == 7])
+    key[1] = set(*[s for s in encoded_digit_sets if len(s) == 2])
+    key[4] = set(*[s for s in encoded_digit_sets if len(s) == 4])
+    key[7] = set(*[s for s in encoded_digit_sets if len(s) == 3])
+    key[8] = set(*[s for s in encoded_digit_sets if len(s) == 7])
 
     segments_b_and_d = list(key[4] - key[1])
-    key[5] = set(*[l for l in sorted_encoded_digits if len(l) == 5 and segments_b_and_d[0] in l and segments_b_and_d[1] in l])
+    key[5] = set(*[l for l in encoded_digit_sets if len(l) == 5 and segments_b_and_d[0] in l and segments_b_and_d[1] in l])
 
     segment_a = list(key[7] - key[1])[0]
     segment_g = list(key[5] - key[4] - set(segment_a))[0]
     segment_e = list(key[8] - key[4] - set(segment_a) - set(segment_g))[0]
-    key[9] = set(*[l for l in sorted_encoded_digits if len(l) == 6 and set(l).union(set(segment_e)) == key[8]])
+    key[9] = set(*[s for s in encoded_digit_sets if len(s) == 6 and s.union(set(segment_e)) == key[8]])
 
-    remaining_encoded_digits = [n for n in sorted_encoded_digits if set(n) not in key]
-    key[2] = set(*[l for l in remaining_encoded_digits if len(l) == 5 and segment_e in l])
-    key[3] = set(*[l for l in remaining_encoded_digits if len(l) == 5 and segment_e not in l])
+    remaining_encoded_digits = [set(n) for n in encoded_digit_sets if set(n) not in key]
+    key[2] = set(*[s for s in remaining_encoded_digits if len(s) == 5 and segment_e in s])
+    key[3] = set(*[s for s in remaining_encoded_digits if len(s) == 5 and segment_e not in s])
 
-    key[0] = set(*[l for l in remaining_encoded_digits if len(l) == 6 and len(set(l) - key[1]) == 4])
-    key[6] = set(*[l for l in remaining_encoded_digits if len(l) == 6 and len(set(l) - key[1]) == 5])
+    key[0] = set(*[s for s in remaining_encoded_digits if len(s) == 6 and len(s - key[1]) == 4])
+    key[6] = set(*[s for s in remaining_encoded_digits if len(s) == 6 and len(s - key[1]) == 5])
 
-    return [sorted(s) for s in key]
+    return key
 
 
 def part_1(dataset=[]):
@@ -43,8 +43,7 @@ def part_2(dataset=[]):
     total = 0
     for line in dataset:
         segment_digit_mapping = _get_segment_digit_mapping(line.split(' | ')[0].split(' '))
-        total += int(''.join([str(segment_digit_mapping.index(sorted(n))) for n in line.split(' | ')[1].split(' ')]))
-
+        total += int(''.join([str(segment_digit_mapping.index(set(n))) for n in line.split(' | ')[1].split(' ')]))
     return total
 
 
