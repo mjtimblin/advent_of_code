@@ -65,7 +65,7 @@ def part_2(dataset=[]):
 
     grid = [[' ' for _ in range(max(p.x for p in points) + 1)] for _ in range(max(p.y for p in points) + 1)]
     for p in points:
-        grid[p.y][p.x] = '■'
+        grid[p.y][p.x] = '█'
 
     return '\n'.join([''.join(l) for l in grid])
 
