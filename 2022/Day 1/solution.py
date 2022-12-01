@@ -25,22 +25,8 @@ def part_2(dataset: List[str]) -> str:
 
 # noinspection DuplicatedCode
 def run_tests():
-    test_data = [line.strip() for line in '''
-1000
-2000
-3000
-
-4000
-
-5000
-6000
-
-7000
-8000
-9000
-
-10000
-'''.strip().splitlines()]
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'test-input.txt'), 'r') as f:
+        test_data = [line.strip() for line in f.readlines()]
     expected_part_1 = '24000'
     expected_part_2 = '45000'
     actual_part_1 = part_1(test_data)
@@ -62,10 +48,8 @@ def run_tests():
 def main():
     run_tests()
 
-    filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.txt')
-    f = open(filepath, 'r')
-    input_lines = [line.strip() for line in f.readlines()]
-    f.close()
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.txt'), 'r') as f:
+        input_lines = [line.strip() for line in f.readlines()]
 
     print(f'Part 1 solution: {part_1(input_lines)}')
     print(f'Part 2 solution: {part_2(input_lines)}')
