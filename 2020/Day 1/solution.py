@@ -1,18 +1,10 @@
-#!/usr/bin/env python3
-
 import os
 import re
-import sys
 
 
 def main():
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print('solution.py {path_to_input_file}')
-        exit(1)
-
     entries = []
-
-    with open(sys.argv[1]) as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.txt'), 'r') as f:
         for line in f.readlines():
             line_only_nums = re.sub('[^0-9]', '', line)
             entries.append(int(line_only_nums))

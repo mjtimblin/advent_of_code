@@ -1,8 +1,5 @@
-#!/usr/bin/env python3
-
 import os
 import re
-import sys
 
 
 def traverse_slope(slope, num_right, num_down):
@@ -20,13 +17,8 @@ def traverse_slope(slope, num_right, num_down):
 
 
 def main():
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print('solution.py {path_to_input_file}')
-        exit(1)
-
     layout = []
-
-    with open(sys.argv[1]) as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.txt'), 'r') as f:
         for line in f.readlines():
             sanitized_line = re.sub('[^#.]', '', line)
             layout.append(list(sanitized_line))

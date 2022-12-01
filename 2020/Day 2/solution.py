@@ -1,18 +1,10 @@
-#!/usr/bin/env python3
-
 import os
 import re
-import sys
 
 
 def main():
-    if len(sys.argv) != 2 or not os.path.isfile(sys.argv[1]):
-        print('solution.py {path_to_input_file}')
-        exit(1)
-
     password_candidates = []
-
-    with open(sys.argv[1]) as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'input.txt'), 'r') as f:
         for line in f.readlines():
             match = re.search('([0-9]+)-([0-9]+) ([a-z]): ([a-z]+)', line)
             password_candidates.append({
@@ -26,8 +18,8 @@ def main():
     part_2_num_valid_passwords = 0
 
     for candidate in password_candidates:
-        num_occurances = candidate['password'].count(candidate['character'])
-        if num_occurances >= candidate['num_1'] and num_occurances <= candidate['num_2']:
+        num_occurrences = candidate['password'].count(candidate['character'])
+        if candidate['num_1'] <= num_occurrences <= candidate['num_2']:
             part_1_num_valid_passwords += 1
 
     for candidate in password_candidates:
