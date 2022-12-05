@@ -2,28 +2,23 @@ import os.path
 from typing import List
 
 
-def score_round(opponent_choice: str, personal_choice: str) -> int:
-    opponent_index = ['A', 'B', 'C'].index(opponent_choice)
-    personal_index = ['X', 'Y', 'Z'].index(personal_choice)
-
-    score = 1 if personal_choice == 'X' else 2 if personal_choice == 'Y' else 3
-    win_points = 6
-    tie_points = 3
-    lose_points = 0
-
+def score_round(opponent_index: int, personal_index: int) -> int:
+    score = 1 if personal_index == 0 else 2 if personal_index == 1 else 3  # initial points for chosen move
     if opponent_index == personal_index:
-        return score + tie_points
+        return score + 3  # 3 points for tie
     elif (personal_index - 1) % 3 == opponent_index:
-        return score + win_points
+        return score + 6  # 6 points for win
     else:
-        return score + lose_points
+        return score  # 0 points for loss
 
 
 def part_1(dataset: List[str]) -> str:
     total_score = 0
     for line in dataset:
         opponent_choice, personal_choice = line.split(' ')
-        total_score += score_round(opponent_choice, personal_choice)
+        opponent_index = ['A', 'B', 'C'].index(opponent_choice)
+        personal_index = ['X', 'Y', 'Z'].index(personal_choice)
+        total_score += score_round(opponent_index, personal_index)
     return str(total_score)
 
 
@@ -33,12 +28,14 @@ def part_2(dataset: List[str]) -> str:
         opponent_choice, outcome = line.split(' ')
 
         opponent_index = ['A', 'B', 'C'].index(opponent_choice)
-        winning_choice = ['X', 'Y', 'Z'][(opponent_index + 1) % 3]
-        losing_choice = ['X', 'Y', 'Z'][(opponent_index - 1) % 3]
-        tie_choice = ['X', 'Y', 'Z'][opponent_index]
-        personal_choice = winning_choice if outcome == 'Z' else losing_choice if outcome == 'X' else tie_choice
+        if outcome == 'X':  # loss
+            personal_index = (opponent_index - 1) % 3
+        elif outcome == 'Y':  # tie
+            personal_index = opponent_index
+        else:  # win
+            personal_index = (opponent_index + 1) % 3
 
-        total_score += score_round(opponent_choice, personal_choice)
+        total_score += score_round(opponent_index, personal_index)
     return str(total_score)
 
 
