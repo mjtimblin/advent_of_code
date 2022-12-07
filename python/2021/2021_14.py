@@ -18,8 +18,6 @@ def run_insertion_step(polymer_pair_and_element_counts: dict, insertion_lookup: 
 class Solution(BaseSolution):
     def __init__(self, use_test_data=False):
         data_prefix = '2021_14'
-        if data_prefix == '20xx_xx':
-            raise ValueError('You must set the data prefix for the year and day')
         super().__init__(use_test_data, data_prefix)
 
     def _get_polymer_pair_and_element_counts(self) -> dict:

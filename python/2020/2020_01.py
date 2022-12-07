@@ -4,8 +4,6 @@ from python.base_solution import BaseSolution
 class Solution(BaseSolution):
     def __init__(self, use_test_data=False):
         data_prefix = '2020_01'
-        if data_prefix == '20xx_xx':
-            raise ValueError('You must set the data prefix for the year and day')
         super().__init__(use_test_data, data_prefix)
         self.dataset = [int(line) for line in self.dataset]
 

@@ -7,8 +7,6 @@ from python.base_solution import BaseSolution
 class Solution(BaseSolution):
     def __init__(self, use_test_data=False):
         data_prefix = '2022_05'
-        if data_prefix == '20xx_xx':
-            raise ValueError('You must set the data prefix for the year and day')
         super().__init__(use_test_data, data_prefix)
 
     def _get_stacks_from_input(self) -> List[List[str]]:

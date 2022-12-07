@@ -37,8 +37,6 @@ def fold_points(coords: List[Coordinate], instruction: FoldInstruction) -> List[
 class Solution(BaseSolution):
     def __init__(self, use_test_data=False):
         data_prefix = '2021_13'
-        if data_prefix == '20xx_xx':
-            raise ValueError('You must set the data prefix for the year and day')
         super().__init__(use_test_data, data_prefix)
 
     def _get_points(self) -> List[Coordinate]:
