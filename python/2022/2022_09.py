@@ -62,34 +62,20 @@ class Solution(BaseSolution):
             direction, distance = line.split(' ')
             distance = int(distance)
             for _ in range(distance):
-                head_index = 0
-                tail_index = 1
                 if direction == 'U':
-                    knots[head_index] = (knots[head_index][0], knots[head_index][1] + 1)
+                    knots[0] = (knots[0][0], knots[0][1] + 1)
                 elif direction == 'D':
-                    knots[head_index] = (knots[head_index][0], knots[head_index][1] - 1)
+                    knots[0] = (knots[0][0], knots[0][1] - 1)
                 elif direction == 'L':
-                    knots[head_index] = (knots[head_index][0] - 1, knots[head_index][1])
+                    knots[0] = (knots[0][0] - 1, knots[0][1])
                 else:
-                    knots[head_index] = (knots[head_index][0] + 1, knots[head_index][1])
+                    knots[0] = (knots[0][0] + 1, knots[0][1])
 
-                knots[tail_index] = self._get_tail_location_for_movement(knots[head_index], knots[tail_index], direction)
-                while tail_index != 9 and (abs(knots[tail_index][0] - knots[tail_index + 1][0]) > 1 or abs(knots[tail_index][1] - knots[tail_index + 1][1]) > 1):
-                    head_index += 1
-                    tail_index += 1
+                for i in range(1, len(knots)):
+                    knots[i] = self._get_tail_location_for_movement(knots[i - 1], knots[i], direction)
+                    if i == 9:
+                        tail_locations.add(knots[i])
 
-                    if direction == 'U':
-                        knots[head_index] = (knots[head_index][0], knots[head_index][1] + 1)
-                    elif direction == 'D':
-                        knots[head_index] = (knots[head_index][0], knots[head_index][1] - 1)
-                    elif direction == 'L':
-                        knots[head_index] = (knots[head_index][0] - 1, knots[head_index][1])
-                    else:
-                        knots[head_index] = (knots[head_index][0] + 1, knots[head_index][1])
-
-                    knots[tail_index] = self._get_tail_location_for_movement(knots[head_index], knots[tail_index], direction)
-
-                tail_locations.add(knots[9])
         return str(len(tail_locations))
 
 
