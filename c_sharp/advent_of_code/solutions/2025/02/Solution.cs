@@ -78,5 +78,6 @@ class Solution(string inputDirectory, string testInputDirectory) : BaseSolution(
                 }
             }
         }
-        return sum.ToString();    }
+        return sum.ToString();
+    }
 }
