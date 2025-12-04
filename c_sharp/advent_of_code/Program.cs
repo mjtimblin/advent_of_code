@@ -22,7 +22,8 @@ List<BaseSolution> solutions =
 [
     new advent_of_code.solutions._2025._01.Solution(inputDirectory, testInputDirectory),
     new advent_of_code.solutions._2025._02.Solution(inputDirectory, testInputDirectory),
-    new advent_of_code.solutions._2025._03.Solution(inputDirectory, testInputDirectory)
+    new advent_of_code.solutions._2025._03.Solution(inputDirectory, testInputDirectory),
+    new advent_of_code.solutions._2025._04.Solution(inputDirectory, testInputDirectory)
 ];
 
 BaseSolution mostRecentSolution = solutions.Last();
