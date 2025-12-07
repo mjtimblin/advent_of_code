@@ -57,6 +57,6 @@ public abstract class BaseSolution(string inputDirectory, string testInputDirect
         {
             throw new FileNotFoundException($"Input file not found for {Year}_{Day:D2} ({inputFilePath})");
         }
-        return File.ReadAllLines(inputFilePath).Select(line => line.Trim()).ToArray();
+        return File.ReadAllLines(inputFilePath).Select(line => line).ToArray();
     }
 }
